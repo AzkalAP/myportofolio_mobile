@@ -1,17 +1,87 @@
-# myportofolio_mobile
+# MyPortfolio Mobile - Azkal Azkiya Arifi Putra
+- **Name:** Azkal Azkiya Arifi Putra
+- **NPM:** 2506636991
+- **Class:** PBP KEIKEIAI (KKI)
 
-A new Flutter project.
+## Project Description
+MyPortfolio Mobile is the Flutter companion to my personal portfolio website. That's it for now :p
 
-## Getting Started
+## Technology
+- Flutter
+- Dart
+- Material 3
+- Flutter widget tests
 
-This project is a starting point for a Flutter application.
+## Local Setup
+1. Install the Flutter SDK and a supported target, such as an Android emulator or Chrome.
 
-A few resources to get you started if this is your first Flutter project:
+2. Open the project directory and fetch its packages:
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+   `flutter pub get`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. Check available run targets:
+
+   `flutter devices`
+
+4. Run the app on a connected device, or launch its web version in Chrome:
+
+   `flutter run`
+
+   `flutter run -d chrome`
+
+5. Run static analysis and widget tests:
+
+   `flutter analyze`
+
+   `flutter test`
+
+## Project Structure
+
+```text
+lib/main.dart             Flutter app entry point and MaterialApp theme
+lib/menu.dart             Portfolio screen, information cards, and action cards
+test/widget_test.dart     Widget tests for identity, action colors, and SnackBars
+android/                  Android platform runner
+ios/                      iOS platform runner
+web/                      Web app entry point and web assets
+```
+
+## Features
+- Displays my NPM, name, and class in three information cards.
+- Provides View Projects, Add Project, and Logout action cards with distinct colors.
+- Shows a SnackBar identifying the action when an action card is tapped.
+- Uses a Material 3 color scheme based on indigo, with amber as its secondary color.
+
+## Testing
+
+Run the checks from the project root:
+
+- `flutter analyze` checks the Dart code for errors and lint issues.
+- `flutter test` checks the portfolio information, action colors, and SnackBar feedback.
+
+## Weekly Progress
+
+### Week 1
+- Set up the Flutter project and separated the app entry point from the menu screen.
+- Built a stateless portfolio dashboard with reusable information and action cards.
+- Added a Material 3 theme and SnackBar feedback for the action cards.
+
+### Assignment 7
+
+1. A widget tree is the nested arrangement of widgets that describes the user interface. A parent widget contains and configures its child widgets. For example, `MaterialApp` is the app root, `Scaffold` provides the page structure, and the scaffold body contains layout widgets such as `Padding`, `Column`, and `Row`, which in turn contain the information and action cards. Flutter passes layout constraints down from parents to children; the children determine their sizes within those constraints, and parents position them.
+
+2. `MyApp` and `MyHomePage` are custom stateless widgets for app setup and the portfolio screen. `MaterialApp` configures the app's Material theme and home page. `Scaffold` supplies the main page structure, and `AppBar` displays the title. `Padding` adds space around content; `Column` and `Row` arrange children vertically and horizontally; `Center` centers content; and `GridView.count` arranges the action cards in a grid. `InfoCard` is a custom widget that displays one piece of identity information using `Card`, `Container`, `Column`, `Text`, and `SizedBox`. `ItemCard` is a custom action widget; it uses `Material` for its colored surface and `InkWell` for tap interaction, with `Icon`, `Text`, and `Padding` for its content. A `SnackBar` displays tap feedback. `ItemHomepage` stores an action's name, icon, and color; it is a data model, not a widget.
+
+3. `MaterialApp` configures a Flutter app that follows Material Design. It provides app-wide features such as the theme, navigation, and home page. Placing it at the root makes that configuration available to the screens and widgets below it in the tree. In this project it applies the Material 3 color scheme and opens `MyHomePage`.
+
+4. A `StatelessWidget` does not own mutable state; its appearance is determined by its configuration and inherited values. A `StatefulWidget` is paired with a `State` object that stores mutable values and can request a rebuild when they change, for example by calling `setState`. A stateless widget is suitable when the displayed content does not change locally, as with this portfolio dashboard. A stateful widget is needed for interactions that update local UI data, such as a counter or editable form.
+
+5. `BuildContext` represents a widget's location in the widget tree. It lets a widget find information and services provided by its ancestors. This screen uses its context to read the theme with `Theme.of(context)`, get the available screen width with `MediaQuery.of(context)`, and find the `ScaffoldMessenger` that displays SnackBars.
+
+6. Hot reload applies supported Dart code changes to a running app while preserving its current in-memory state. It rebuilds affected widgets but does not rerun `main` or `initState`. Hot restart restarts the Dart application from its entry point and clears its in-memory state. A full restart or rebuild is needed for changes hot reload cannot apply, such as native Android or iOS code, plugin or platform configuration changes, and some startup initialization changes.
+
+## AI Disclosure
+
+I used GitHub Copilot in VS Code as a development assistant for this project. The assistance included understanding some aspects of the Tutorials, suggesting, planning, drafting the Assignments, and helping with some questions I asked.
+
+I carefully reviewed and understood every change the AI proposed. I also modified the code whenever I thought the AI was wrong, verified everything with flutter analyze and flutter test, and implemented my own features :D
