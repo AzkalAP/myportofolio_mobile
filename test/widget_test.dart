@@ -16,6 +16,7 @@ void main() {
     expect(find.text('PBP KEIKEIAI (KKI)'), findsOneWidget);
     expect(find.text('View Projects'), findsOneWidget);
     expect(find.text('Add Project'), findsOneWidget);
+    expect(find.text('Add Experience'), findsOneWidget);
     expect(find.text('Logout'), findsOneWidget);
   });
 
@@ -25,7 +26,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(home: MyHomePage()));
 
     final actionCards = find.byType(ItemCard);
-    const expectedColors = [Colors.blue, Colors.green, Colors.red];
+    const expectedColors = [Colors.blue, Colors.green, Colors.teal, Colors.red];
 
     expect(actionCards, findsNWidgets(expectedColors.length));
     for (var index = 0; index < expectedColors.length; index++) {
@@ -48,6 +49,7 @@ void main() {
     ) async {
       await tester.pumpWidget(MaterialApp(home: MyHomePage()));
 
+      await tester.ensureVisible(find.text(actionName));
       await tester.tap(find.text(actionName));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 300));
