@@ -10,6 +10,7 @@ MyPortfolio Mobile is the Flutter companion to my personal portfolio website. Th
 - Flutter
 - Dart
 - Material 3
+- Material UI
 - Flutter widget tests
 
 ## Local Setup
@@ -38,18 +39,27 @@ MyPortfolio Mobile is the Flutter companion to my personal portfolio website. Th
 ## Project Structure
 
 ```text
-lib/main.dart             Flutter app entry point and MaterialApp theme
-lib/menu.dart             Portfolio screen, information cards, and action cards
-test/widget_test.dart     Widget tests for identity, action colors, and SnackBars
-android/                  Android platform runner
-ios/                      iOS platform runner
-web/                      Web app entry point and web assets
+lib/main.dart                         Flutter app entry point and MaterialApp theme
+lib/screens/menu.dart                 Portfolio dashboard
+lib/screens/project_form.dart         Tutorial 09 Add Project form
+lib/screens/experience_form.dart     Assignment 8 Experience form
+lib/widgets/left_drawer.dart          Shared drawer and navigation entries
+lib/widgets/project_card.dart        Reusable portfolio action card
+test/widget_test.dart                 Dashboard, colors, SnackBars, and project form tests
+test/experience_form_test.dart        Experience form validation and summary tests
+test/experience_navigation_test.dart  Experience navigation tests
+android/                              Android platform runner
+ios/                                  iOS platform runner
+web/                                  Web app entry point and web assets
 ```
 
 ## Features
 - Displays my NPM, name, and class in three information cards.
-- Provides View Projects, Add Project, and Logout action cards with distinct colors.
+- Provides View Projects, Add Project, Add Experience, and Logout action cards with distinct colors.
 - Shows a SnackBar identifying the action when an action card is tapped.
+- Opens the Experience form from the home action card or shared drawer.
+- Validates Experience details, then displays them in a summary dialog.
+- Reuses the drawer across the home, Add Project, and Experience screens.
 - Uses a Material 3 color scheme based on indigo, with amber as its secondary color.
 
 ## Testing
@@ -57,7 +67,7 @@ web/                      Web app entry point and web assets
 Run the checks from the project root:
 
 - `flutter analyze` checks the Dart code for errors and lint issues.
-- `flutter test` checks the portfolio information, action colors, and SnackBar feedback.
+- `flutter test` checks the dashboard, action colors, SnackBar feedback, project form, Experience validation, summary dialog, and navigation.
 
 ## Weekly Progress
 
@@ -79,6 +89,16 @@ Run the checks from the project root:
 5. `BuildContext` represents a widget's location in the widget tree. It lets a widget find information and services provided by its ancestors. This screen uses its context to read the theme with `Theme.of(context)`, get the available screen width with `MediaQuery.of(context)`, and find the `ScaffoldMessenger` that displays SnackBars.
 
 6. Hot reload applies supported Dart code changes to a running app while preserving its current in-memory state. It rebuilds affected widgets but does not rerun `main` or `initState`. Hot restart restarts the Dart application from its entry point and clears its in-memory state. A full restart or rebuild is needed for changes hot reload cannot apply, such as native Android or iOS code, plugin or platform configuration changes, and some startup initialization changes.
+
+### Assignment 8
+
+1. `Navigator.push()` adds a new route above the current route, `Navigator.pushReplacement()` replaces the current route, and `Navigator.pop()` removes the top route to reveal the one below it. The Add Experience card opens the form with `Navigator.push()`, so Back returns to the dashboard. The drawer's Home option uses `Navigator.pushReplacement()` to replace the form with the home screen.
+
+2. `Scaffold` gives each screen a consistent page structure, while `AppBar` provides its title and top-level controls. The same `LeftDrawer` is used on the dashboard and form screens, so navigation stays consistent. The home and Experience app bars both use the theme's primary color; the drawer header also uses indigo, matching the portfolio palette.
+
+3. The form uses a vertical `Column` inside a `SingleChildScrollView`, with `Padding` around each field. The padding separates controls, and the scroll view lets users reach fields and Save when the form is taller than the screen or the keyboard reduces the available space. The date fields open date pickers rather than requiring users to type dates.
+
+4. `GlobalKey<FormState>` gives the Save handler access to the form state. Each field's `validator` checks its value, and `validate()` runs those checks before the summary dialog is shown. For example, a title containing only spaces is rejected because trimming it leaves an empty value. An input type or keyboard only guides what a user can type; it does not guarantee valid data. The optional URL is separately checked for a valid HTTP(S) scheme, and an end date cannot be earlier than the start date.
 
 ## AI Disclosure
 
