@@ -1,12 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:myportofolio_mobile/screens/experience_form.dart';
+
+import 'test_helpers.dart';
 
 void main() {
   testWidgets('rejects empty and whitespace-only required fields', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(const MaterialApp(home: ExperienceFormPage()));
+    await tester.pumpWidget(testApp(const ExperienceFormPage()));
 
     await tester.enterText(
       find.byKey(const ValueKey('experience-title')),
@@ -33,7 +35,7 @@ void main() {
   testWidgets('rejects an end date earlier than the start date', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(const MaterialApp(home: ExperienceFormPage()));
+    await tester.pumpWidget(testApp(const ExperienceFormPage()));
     await _enterRequiredText(tester);
     await _selectDate(tester, 'experience-start-date', '20');
     await _selectDate(tester, 'experience-end-date', '19');
@@ -51,7 +53,7 @@ void main() {
   testWidgets('rejects a URL without a valid HTTP(S) scheme', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(const MaterialApp(home: ExperienceFormPage()));
+    await tester.pumpWidget(testApp(const ExperienceFormPage()));
     await _enterRequiredText(tester);
     await _selectDate(tester, 'experience-start-date', '15');
     await tester.enterText(
@@ -69,7 +71,7 @@ void main() {
   testWidgets('shows entered values and closes back to the form', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(const MaterialApp(home: ExperienceFormPage()));
+    await tester.pumpWidget(testApp(const ExperienceFormPage()));
     await _enterRequiredText(tester);
     await _selectDate(tester, 'experience-start-date', '15');
     await tester.enterText(
@@ -99,7 +101,7 @@ void main() {
   });
 
   testWidgets('allows an omitted optional URL', (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home: ExperienceFormPage()));
+    await tester.pumpWidget(testApp(const ExperienceFormPage()));
     await _enterRequiredText(tester);
     await _selectDate(tester, 'experience-start-date', '15');
 

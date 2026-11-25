@@ -1,7 +1,11 @@
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:myportofolio_mobile/screens/experience_form.dart';
 import 'package:myportofolio_mobile/screens/menu.dart';
 import 'package:myportofolio_mobile/screens/project_form.dart';
+import 'package:myportofolio_mobile/screens/project_list_screen.dart';
+import 'package:myportofolio_mobile/services/auth_state.dart';
+import 'package:myportofolio_mobile/widgets/auth_guard.dart';
+import 'package:provider/provider.dart';
 
 class ItemCard extends StatelessWidget {
   final ItemHomepage item;
@@ -21,11 +25,23 @@ class ItemCard extends StatelessWidget {
               SnackBar(content: Text('You pressed the ${item.name} button!')),
             );
 
-          if (item.name == 'Add Project') {
+          if (item.name == 'View Projects') {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ProjectFormPage()),
+              MaterialPageRoute(
+                builder: (context) => const ProjectListScreen(),
+              ),
             );
+          } else if (item.name == 'Add Project') {
+            ensureLoggedIn(context).then((loggedIn) {
+              if (!loggedIn || !context.mounted) return;
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProjectFormPage(),
+                ),
+              );
+            });
           } else if (item.name == 'Add Experience') {
             Navigator.push(
               context,
@@ -33,6 +49,11 @@ class ItemCard extends StatelessWidget {
                 builder: (context) => const ExperienceFormPage(),
               ),
             );
+          } else if (item.name == 'Logout') {
+            final auth = context.read<AuthState>();
+            if (auth.isLoggedIn) {
+              auth.logout();
+            }
           }
         },
         child: Container(

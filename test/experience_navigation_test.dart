@@ -1,13 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/material.dart';
 import 'package:myportofolio_mobile/screens/experience_form.dart';
 import 'package:myportofolio_mobile/screens/menu.dart';
+
+import 'test_helpers.dart';
 
 void main() {
   testWidgets('home action opens Experience and system back returns home', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(MaterialApp(home: MyHomePage()));
+    await tester.pumpWidget(testApp(MyHomePage()));
 
     await tester.tap(find.text('Add Experience'));
     await tester.pumpAndSettle();
@@ -23,7 +25,7 @@ void main() {
   testWidgets('drawer Add Experience opens the Experience form', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(MaterialApp(home: MyHomePage()));
+    await tester.pumpWidget(testApp(MyHomePage()));
     await _openDrawer(tester);
 
     final addExperienceEntry = find.descendant(
@@ -40,7 +42,7 @@ void main() {
   testWidgets('Home from the Experience drawer returns to the dashboard', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(MaterialApp(home: MyHomePage()));
+    await tester.pumpWidget(testApp(MyHomePage()));
     await tester.tap(find.text('Add Experience'));
     await tester.pumpAndSettle();
     await _openDrawer(tester);
